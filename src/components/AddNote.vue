@@ -1,36 +1,36 @@
 <template>
     <div class="addnote">
+        <transition name="fade">
+            <Modal 
+                title="Add New Note" 
+                v-if="modalShown" 
+                @closeModal="toggleModal" >
 
-        <Modal 
-        title="Add New Note" 
-        v-if="modalShown" 
-        @closeModal="toggleModal" >
+                <hr>
 
-           <hr>
+                <label for="noteTitle"> Title:
+                    <input type="text" class="inputs" name="noteTitle" v-model="noteTitle" placeholder="title">
+                </label>
 
-           <label for="noteTitle"> Title:
-              <input type="text" class="inputs" name="noteTitle" v-model="noteTitle" placeholder="title">
-           </label>
+                <br />
 
-           <br />
+                <label for="notebody" > Note:
+                    <textarea class="inputs" name="notebody" v-model="noteBody" cols="30" rows="10"></textarea>
+                </label>
 
-           <label for="notebody" > Note:
-              <textarea class="inputs" name="notebody" v-model="noteBody" cols="30" rows="10"></textarea>
-           </label>
+                <br />
 
-           <br />
+                <button 
+                    @click="addNotes" 
+                    :disabled="noteTitle.length < 3" 
+                    class="add-btn" 
+                    id="add-this-note"
+                >
+                    Add this Note
+                </button>
 
-           <button 
-             @click="addNotes" 
-             :disabled="noteTitle.length < 3" 
-             class="add-btn" 
-             id="add-this-note"
-           >
-             Add this Note
-           </button>
-
-        </Modal>
-
+            </Modal>
+        </transition>
         <button 
           @click="toggleModal" 
           class="add-btn" 

@@ -1,23 +1,24 @@
 <template>
     <div class="Noteitem">
-        <Modal 
-        title="Edit this Note"
-        v-if="notes.edit"
-        @closeModal="showModal" 
-         >
-            <hr>
-            <label for="noteTitle"> Title:
-                <input type="text" class="inputs" name="noteTitle" v-model="notes.title" placeholder="title">
-            </label>
-            <br />
-            <label for="notebody" > Note:
-                <textarea class="inputs" name="notebody" v-model="notes.body" cols="30" rows="10"></textarea>
-            </label>
-        </Modal>
-
+        <transition name="fade">
+            <Modal 
+                title="Edit this Note"
+                v-if="notes.edit"
+                @closeModal="showModal" 
+                >
+                    <hr>
+                    <label for="noteTitle"> Title:
+                        <input type="text" class="inputs" name="noteTitle" v-model="notes.title" placeholder="title">
+                    </label>
+                    <br />
+                    <label for="notebody" > Note:
+                        <textarea class="inputs" name="notebody" v-model="notes.body" cols="30" rows="10"></textarea>
+                    </label>
+            </Modal>
+        </transition>
         <div class="card">
             <button @click="showModal" class="edit-btn">Edit</button>
-            <button @click="$emit('deleteNotes', notes.id)" class="delete-btn">Delete</button>
+            <button @click="deleteItem" class="delete-btn">Delete</button>
             <h3>{{ notes.title }}</h3>
             <hr>
             <p>{{ notes.body }}</p>
@@ -46,6 +47,11 @@ export default {
         }
     },
     methods:{
+        deleteItem(){
+            if(confirm('Delete This Note?')){
+                this.$emit('deleteNotes', this.notes.id);
+            }
+        },
         showModal()
         {
             this.notes.edit = !this.notes.edit;
@@ -94,5 +100,6 @@ label{
     padding: 5px;
     width: 60px;
 }
+
 
 </style>
